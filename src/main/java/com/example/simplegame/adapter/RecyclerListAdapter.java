@@ -20,6 +20,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<ItemViewHolder> im
             "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
     };
 
+
     private final List<String> mItems = new ArrayList<>();
 
     public RecyclerListAdapter() {
@@ -34,7 +35,39 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<ItemViewHolder> im
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        holder.textView.setText(mItems.get(position));
+        switch (position) {
+            case 0:
+                holder.imageView.setImageResource(R.drawable.image_part_001);
+                break;
+            case 1:
+                holder.imageView.setImageResource(R.drawable.image_part_002);
+                break;
+            case 2:
+                holder.imageView.setImageResource(R.drawable.image_part_003);
+                break;
+            case 3:
+                holder.imageView.setImageResource(R.drawable.image_part_004);
+                break;
+            case 4:
+                holder.imageView.setImageResource(R.drawable.image_part_005);
+                break;
+            case 5:
+                holder.imageView.setImageResource(R.drawable.image_part_006);
+                break;
+            case 6:
+                holder.imageView.setImageResource(R.drawable.image_part_007);
+                break;
+            case 7:
+                holder.imageView.setImageResource(R.drawable.image_part_008);
+                break;
+            case 8:
+                holder.imageView.setImageResource(R.drawable.image_part_009);
+                break;
+            default:
+                holder.imageView.setImageResource(R.drawable.ic_launcher_background);
+                break;
+        }
+
     }
 
     @Override

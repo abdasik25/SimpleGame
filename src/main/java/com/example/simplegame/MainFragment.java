@@ -22,11 +22,11 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplegame.adapter.RecyclerListAdapter;
 import com.example.simplegame.callback.SimpleItemTouchHelperCallback;
+import com.example.simplegame.layout.SpanningGridLayoutManager;
 
 public class MainFragment extends Fragment{
     private ItemTouchHelper mItemTouchHelper;
@@ -49,7 +49,8 @@ public class MainFragment extends Fragment{
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new SpanningGridLayoutManager(this.getContext(), 3));
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
