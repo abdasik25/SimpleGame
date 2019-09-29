@@ -14,12 +14,15 @@ package com.example.simplegame;/*
  * limitations under the License.
  */
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +34,7 @@ import com.example.simplegame.layout.SpanningGridLayoutManager;
 public class MainFragment extends Fragment {
 
     private ItemTouchHelper mItemTouchHelper;
+    private Button restartButton;
 
     public MainFragment() {
     }
@@ -45,17 +49,30 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerListAdapter adapter = new RecyclerListAdapter();
+        final RecyclerListAdapter adapter = new RecyclerListAdapter();
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        restartButton = view.findViewById(R.id.restartButton);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutManager(new SpanningGridLayoutManager(this.getContext(), 3));
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
 
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.reshuffle();
+            }
+        });
+
     }
+
+    public void finishGame(){
+        restartButton.setText("You won!");
+        restartButton.setTextColor(Color.RED);
+    }
+
 }

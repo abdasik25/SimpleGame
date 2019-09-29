@@ -11,30 +11,26 @@ import com.example.simplegame.R;
 import com.example.simplegame.util.GridMapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
 
-    private static final String[] STRINGS = new String[]{
-            "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
-    };
-
     private static List<Integer> INDEXES;
 
     private ItemViewHolder greenCell;
-
-    private final List<String> mItems;
 
     public RecyclerListAdapter() {
         INDEXES = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             INDEXES.add(i, i);
         }
-        mItems = new ArrayList<>();
-        mItems.addAll(Arrays.asList(STRINGS));
         Collections.shuffle(INDEXES);
+        INDEXES.add(8);
+    }
+
+    public static void setINDEXES(List<Integer> INDEXES) {
+        RecyclerListAdapter.INDEXES = INDEXES;
     }
 
     @Override
@@ -46,7 +42,7 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        if (position == 8) {
+        if (INDEXES.get(position) == 8) {
             greenCell = holder;
             holder.imageView.setImageResource(R.drawable.ic_launcher_background);
         } else {
@@ -78,37 +74,38 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             }
         }
 
+        if (INDEXES.get(position) != null && INDEXES.get(position) == (INDEXES.get(position) + 1)) {
+
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return INDEXES.size();
     }
 
     @Override
     public void onItemDismiss(int position) {
-        mItems.remove(position);
         notifyItemRemoved(position);
     }
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
-       if (fromPosition < toPosition) {
-             Collections.swap(mItems, fromPosition, toPosition);
-           notifyItemMoved(fromPosition, toPosition);
-           }
-       else {
-           Collections.swap(mItems, toPosition, fromPosition);
-           notifyItemMoved(toPosition, fromPosition);
-       }
-//        } else {
-//            for (int i = fromPosition; i > toPosition; i--) {
-//                Collections.swap(mItems, i, i - 1);
-//            }
-//        }
+        Collections.swap(INDEXES, fromPosition, toPosition);
+        notifyDataSetChanged();
 
-    //    Collections.swap(mItems, fromPosition, toPosition);
-       // notifyDataSetChanged();
+    }
+
+    public void reshuffle() {
+
+        List NEW_INDEXES = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            NEW_INDEXES.add(i, i);
+        }
+        Collections.shuffle(NEW_INDEXES);
+        NEW_INDEXES.add(8);
+        setINDEXES(NEW_INDEXES);
+        notifyDataSetChanged();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
