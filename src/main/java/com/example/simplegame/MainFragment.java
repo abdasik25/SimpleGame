@@ -25,10 +25,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.simplegame.adapter.RecyclerListAdapter;
-import com.example.simplegame.callback.SimpleItemTouchHelperCallback;
+import com.example.simplegame.adapter.SimpleItemTouchHelperCallback;
 import com.example.simplegame.layout.SpanningGridLayoutManager;
 
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment {
+
     private ItemTouchHelper mItemTouchHelper;
 
     public MainFragment() {
@@ -55,5 +56,6 @@ public class MainFragment extends Fragment{
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(adapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
+
     }
 }

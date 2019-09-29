@@ -1,10 +1,8 @@
-package com.example.simplegame.callback;
+package com.example.simplegame.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.simplegame.adapter.ItemTouchHelperAdapter;
 
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
@@ -24,16 +22,16 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView,
                                 @NonNull RecyclerView.ViewHolder viewHolder) {
-        int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.RIGHT |
-                ItemTouchHelper.DOWN;
+        int dragFlags = ((RecyclerListAdapter.ItemViewHolder) viewHolder).makeDragFlags();
         int swipeFlags = 0;
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                          RecyclerView.ViewHolder target) {
-        mAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                          @NonNull RecyclerView.ViewHolder target) {
+
+        mAdapter.onItemMove(viewHolder.getAdapterPosition(),target.getAdapterPosition());
         return true;
     }
 
