@@ -1,8 +1,10 @@
-package com.example.simplegame;
+package com.example.simplegame.activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.simplegame.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,7 +13,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-
 
 }

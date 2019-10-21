@@ -18,7 +18,6 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         mAdapter = adapter;
     }
 
-
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView,
                                 @NonNull RecyclerView.ViewHolder viewHolder) {

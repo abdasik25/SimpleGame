@@ -12,6 +12,7 @@ import com.example.simplegame.util.GridMapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder> implements ItemTouchHelperAdapter {
@@ -20,13 +21,16 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
 
     private ItemViewHolder greenCell;
 
-    public RecyclerListAdapter() {
+    private Win win;
+
+    public RecyclerListAdapter(Win win) {
         INDEXES = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             INDEXES.add(i, i);
         }
-        Collections.shuffle(INDEXES);
         INDEXES.add(8);
+        Collections.swap(INDEXES, 8, 7);
+        this.win = win;
     }
 
     public static void setINDEXES(List<Integer> INDEXES) {
@@ -74,9 +78,26 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
             }
         }
 
-        if (INDEXES.get(position) != null && INDEXES.get(position) == (INDEXES.get(position) + 1)) {
-
+        if (isSorted(INDEXES)){
+            win.finishGame();
         }
+    }
+
+    public static boolean isSorted(List<Integer> list) {
+        if ((list) == null || list.size() == 1) {
+            return true;
+        }
+
+        Iterator<Integer> iter = list.iterator();
+        Integer current, previous = iter.next();
+        while (iter.hasNext()) {
+            current = iter.next();
+            if (previous.compareTo(current) > 0) {
+                return false;
+            }
+            previous = current;
+        }
+        return true;
     }
 
     @Override
@@ -93,12 +114,11 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
     public void onItemMove(int fromPosition, int toPosition) {
         Collections.swap(INDEXES, fromPosition, toPosition);
         notifyDataSetChanged();
-
     }
 
     public void reshuffle() {
 
-        List NEW_INDEXES = new ArrayList<>();
+        List<Integer> NEW_INDEXES = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             NEW_INDEXES.add(i, i);
         }

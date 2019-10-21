@@ -3,10 +3,13 @@ package com.example.simplegame.util;
 import androidx.recyclerview.widget.ItemTouchHelper;
 
 public class GridMapper {
+
     private static int columns;
+
     private static int rows;
 
     private static int currentRow;
+
     private static int currentColumn;
 
     public static final int GRIDSIZE = 3;
